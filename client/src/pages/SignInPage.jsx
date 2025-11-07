@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { useAuthStore } from "../store/useAuthStore";
 import { Eye, EyeOff, Loader2, Lock, Mail, MessageSquare } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import AuthImagePattern from "../components/AuthImagePattern";
 
 const SignInPage = () => {
     const [showPassword, setShowPassword] = useState(false);
-    const navigate = useNavigate();
 
     const { isSigningIn, signin } = useAuthStore();
     const [formData, setFormData] = useState({
@@ -30,10 +29,7 @@ const SignInPage = () => {
 
         const success = validateForm();
 
-        if (success) {
-            signin(formData);
-            navigate("/");
-        }
+        if (success) signin(formData);
     };
     return (
         <div className="grid lg:grid-cols-2 min-h-screen">
