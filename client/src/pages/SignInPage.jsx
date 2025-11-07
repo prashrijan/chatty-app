@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { useAuthStore } from "../store/useAuthStore";
 import { Eye, EyeOff, Loader2, Lock, Mail, MessageSquare } from "lucide-react";
@@ -9,15 +9,11 @@ const SignInPage = () => {
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
 
-    const { isSigningIn, signin, authUser } = useAuthStore();
+    const { isSigningIn, signin } = useAuthStore();
     const [formData, setFormData] = useState({
         email: "",
         password: "",
     });
-
-    useEffect(() => {
-        if (authUser) navigate("/");
-    }, [authUser, navigate]);
 
     const validateForm = () => {
         if (!formData.email.trim()) return toast.error("Email is required");
@@ -34,7 +30,10 @@ const SignInPage = () => {
 
         const success = validateForm();
 
-        if (success) signin(formData);
+        if (success) {
+            signin(formData);
+            navigate("/");
+        }
     };
     return (
         <div className="grid lg:grid-cols-2 min-h-screen">
